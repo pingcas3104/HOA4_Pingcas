@@ -3,8 +3,9 @@
 - name: Adding APT repository
   apt_repository:
    repo: deb  https://artifacts.elastic.co/packages/7.x/apt  stable main
-   state: present# Installing Logstash
+   state: present
 
+# Installing Logstash
 - name: Update repositories cache and install Logstash
   apt:
    name: logstash
@@ -13,37 +14,42 @@
 - name: Configure logstash.yml File
   copy:
     src: /path/to/your/logstash.yml
-    dest: /etc/logstash/logstash.yml# Configure Logstash filter.conf config file
+    dest: /etc/logstash/logstash.yml
 
-- name: Configure  Filter
+# Configure Logstash filter.conf config file
+- name: Configure Filter
   template:
     src=filter.conf.j2
     dest=/etc/logstash/conf.d/filter.conf
     owner=root
     group=root
-    mode=0644# Configure Beats or any (input source) for logstash pipeline
+    mode=0644
 
+# Configure Beats or any (input source) for logstash pipeline
 - name: Configure input source
   template:
     src=input.conf.j2
     dest=/etc/logstash/conf.d/input.conf
     owner=root
     group=root
-    mode=0644# Configure output source for logstash pipeline
+    mode=0644
 
+# Configure output source for logstash pipeline
 - name: Configure output source
   template:
     src=output.conf.j2
     dest=/etc/logstash/conf.d/output.conf
     owner=root
     group=root
-    mode=0644# Enable Logstash service
+    mode=0644
 
+# Enable Logstash service
 - name: Enable Logstash service
   systemd:
     name: logstash
-    enabled: yes# Start Logstash service
+    enabled: yes
 
+# Start Logstash service
 - name: Start Logstash service
   systemd:
     name: logstash
